@@ -35,8 +35,7 @@ public class BackwardArrayItTest {
     @Test(expected = NoSuchElementException.class)
     public void whenNextFromEmpty() {
         BackwardArrayIt it = new BackwardArrayIt(
-                new int[] {}
-        );
+                new int[] {});
         it.next();
     }
 }
