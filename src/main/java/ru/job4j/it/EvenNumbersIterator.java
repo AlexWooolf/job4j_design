@@ -18,6 +18,7 @@ public class EvenNumbersIterator implements Iterator<Integer> {
         for (int i = index; i < data.length; i++) {
             if (data[i] % 2 == 0) {
                 rsl = true;
+                index = i;
                 break;
             }
         }
@@ -26,16 +27,9 @@ public class EvenNumbersIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        int rsl;
         if (!hasNext()) {
             throw new NoSuchElementException();
-        } else {
-            while (data[index] % 2 != 0) {
-                index++;
-            }
-           rsl = data[index];
-            index++;
         }
-        return rsl;
+        return data[index++];
     }
 }
