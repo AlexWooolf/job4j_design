@@ -18,7 +18,7 @@ public class EvenNumbersIterator implements Iterator<Integer> {
             index++;
         }
         return (index < data.length);
-        }
+    }
 
     @Override
     public Integer next() {
