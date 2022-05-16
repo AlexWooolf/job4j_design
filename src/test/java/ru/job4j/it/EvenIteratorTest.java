@@ -56,4 +56,13 @@ public class EvenIteratorTest {
         assertThat(it.next(), is(6));
         assertThat(it.hasNext(), is(false));
     }
+
+    @Test
+    public void all2NumbersAreEven() {
+        it = new EvenNumbersIterator(new int[] {2});
+        assertThat(it.next(), is(2));
+        assertThat(it.hasNext(), is(false));
+
+
+    }
 }
