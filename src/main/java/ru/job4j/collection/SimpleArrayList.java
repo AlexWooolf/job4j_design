@@ -19,7 +19,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     @Override
     public void add(T value) {
         if (size == container.length) {
-            container = newSize(container);
+            newSize(container);
         }
         container[size] = value;
         modCount++;
@@ -71,9 +71,6 @@ public class SimpleArrayList<T> implements SimpleList<T> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                while (size > cursor && container[cursor] == null) {
-                    cursor++;
-                }
                 return size > cursor;
             }
 
@@ -88,7 +85,11 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         };
     }
 
-    private T[] newSize(T[] first) {
-     return Arrays.copyOf(first, first.length * 2);
+    private void newSize(T[] first) {
+        if (container.length == 0) {
+            container = Arrays.copyOf(first, 10);
+        } else {
+            container = Arrays.copyOf(first, first.length * 2);
+        }
     }
 }
