@@ -4,34 +4,33 @@ import java.util.*;
 
 public class SimpleLinkedList<E> implements LinkedList<E> {
 
-    private Node<E>[] container;
-
     private int size;
 
     private int modCount;
 
+    transient Node<E> first;
+
+    transient Node<E> last;
+
     private static class Node<E> {
         E item;
         Node<E> next;
-        Node<E> prev;
 
-        Node(Node<E> prev, E element, Node<E> next) {
+        Node(E element, Node<E> next) {
             this.item = element;
             this.next = next;
-            this.prev = prev;
         }
     }
 
     @Override
     public void add(E value) {
         if (size == 0) {
-            this.container = new Node[10];
-            container[size] = new Node<E>(null, value, null);
-        } else if (size == container.length) {
-            newSize(container);
+            first = new Node<E>(value, null);
         } else {
-            container[size] = new Node<E>(container[size - 1], value, null);
-            container[size - 1] = new Node<E>(container[size - 1].prev, container[size - 1].item, container[size]);
+            Node<E> newNode = new Node<E>(value, null);
+            last = newNode;
+            first.item = last.item;
+            first.next = newNode;
         }
             modCount++;
             size++;
@@ -39,8 +38,12 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
 
     @Override
     public E get(int index) {
+        Node<E> rsl = null;
         Objects.checkIndex(index, size);
-        return container[index].item;
+        for (int i = 0; i <= index; i++) {
+            rsl = first.next;
+        }
+         return rsl.item;
     }
 
     @Override
@@ -65,13 +68,9 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return container[cursor++].item;
+                return get(cursor++);
             }
 
         };
-    }
-
-    private void newSize(Node<E>[] first) {
-            container = Arrays.copyOf(first, first.length * 2);
     }
 }
