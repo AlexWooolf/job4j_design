@@ -1,9 +1,6 @@
 package ru.job4j.collection;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 
 public class SimpleArrayList<T> implements SimpleList<T> {
 
@@ -13,7 +10,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     private int modCount;
 
-    private int cursor = 0;
+
 
     public SimpleArrayList(int capacity) {
         this.container = (T[]) new Object[capacity];
@@ -31,6 +28,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     @Override
     public T set(int index, T newValue) {
+        Objects.checkIndex(index, size);
         T temp = container[index];
         container[index] = newValue;
         modCount++;
@@ -39,8 +37,9 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     @Override
     public T remove(int index) {
+        Objects.checkIndex(index, size);
         T tmp = container[index];
-        System.arraycopy(container, index + 1, container, index,container.length - index - 1);
+        System.arraycopy(container, index + 1, container, index, container.length - index - 1);
         container[container.length - 1] = null;
         modCount++;
         size--;
@@ -49,6 +48,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     @Override
     public T get(int index) {
+        Objects.checkIndex(index, size);
         return container[index];
     }
 
@@ -60,12 +60,21 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     @Override
     public Iterator<T> iterator() {
 
-
         return new Iterator<T>() {
+
+            private int cursor = 0;
+
+            private int expectedModCount = modCount;
 
             @Override
             public boolean hasNext() {
-                return container.length > cursor && container[cursor] != null;
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                while (size > cursor && container[cursor] == null) {
+                    cursor++;
+                }
+                return size > cursor;
             }
 
             @Override
