@@ -24,24 +24,24 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
 
     @Override
     public void add(E value) {
-        if (size == 0) {
-            first = new Node<E>(value, null);
+        final Node<E> l = last;
+        final Node<E> newNode = new Node<>(value, null);
+        last = newNode;
+        if (l == null) {
+            first = newNode;
         } else {
-            Node<E> newNode = new Node<E>(value, null);
-            last = newNode;
-            first.item = last.item;
-            first.next = newNode;
+            l.next = newNode;
         }
-            modCount++;
-            size++;
+        size++;
+        modCount++;
     }
 
     @Override
     public E get(int index) {
-        Node<E> rsl = null;
         Objects.checkIndex(index, size);
-        for (int i = 0; i <= index; i++) {
-            rsl = first.next;
+        Node<E> rsl = first;
+        for (int i = 0; i < index; i++) {
+            rsl = rsl.next;
         }
          return rsl.item;
     }
