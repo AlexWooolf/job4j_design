@@ -54,8 +54,6 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
 
             private int expectedModCount = modCount;
 
-            int count = 0;
-
             Node<E> f = first;
 
             @Override
@@ -64,7 +62,7 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
                     throw new ConcurrentModificationException();
                 }
 
-                return count < size;
+                return f != null;
             }
 
             @Override
@@ -74,7 +72,6 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
                 }
                 E rsl = f.item;
                 f = f.next;
-                count++;
                 return rsl;
             }
 
