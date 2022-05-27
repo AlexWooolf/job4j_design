@@ -10,25 +10,15 @@ public class SimpleQueue<T> {
         if (out.isEmpty() && in.isEmpty()) {
     throw  new NoSuchElementException();
         }
-        T rsl;
-        if (!out.isEmpty()) {
-            rsl = out.pop();
-        } else {
+        if (out.isEmpty()) {
             while (!in.isEmpty()) {
                 out.push(in.pop());
             }
-            rsl = out.pop();
         }
-        return rsl;
+        return out.pop();
     }
 
     public void push(T value) {
         in.push(value);
-    }
-
-    public static void main(String[] args) {
-        SimpleQueue n = new SimpleQueue();
-        n.push(1);
-        n.poll();
     }
 }
