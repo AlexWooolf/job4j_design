@@ -8,24 +8,24 @@ public class SimpleQueue<T> {
 
     public T poll() {
         T rsl;
-        try {
-            while (true) {
+        if (!out.isEmpty()) {
+            rsl = out.pop();
+        } else {
+            while (!in.isEmpty()) {
                 out.push(in.pop());
             }
-        } catch (NoSuchElementException e) {
             rsl = out.pop();
-        } finally {
-            try {
-                while (true) {
-                    in.push(out.pop());
-                }
-            } catch (NoSuchElementException e) {
-            }
-            }
+        }
         return rsl;
     }
 
     public void push(T value) {
         in.push(value);
+    }
+
+    public static void main(String[] args) {
+        SimpleQueue n = new SimpleQueue();
+        n.push(1);
+        n.poll();
     }
 }
