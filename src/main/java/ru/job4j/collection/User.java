@@ -17,11 +17,6 @@ public class User {
         this.birthday = birthday;
     }
 
-    static int hash(Object key) {
-        int h = key.hashCode();
-        return (key == null) ? 0 : (h) ^ (h >>> 16);
-    }
-
     public static void main(String[] args) {
         Calendar calendar = new GregorianCalendar(2000, 0, 0);
         var user1 = new User("Name", 2, calendar);
@@ -32,8 +27,8 @@ public class User {
         List<Map.Entry<User, Object>> list = new ArrayList<>(map.entrySet());
         System.out.println(user1.hashCode());
         System.out.println(user2.hashCode());
-        int i1 = hash(user1) & 15;
-        int i2 = hash(user2) & 15;
+        int i1 = user1.hashCode() % 16;
+        int i2 = user2.hashCode() % 16;
         System.out.println(i1);
         System.out.println(i2);
         for (Map.Entry l : list) {
