@@ -1,8 +1,7 @@
 package ru.job4j.map;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Objects;
+import java.security.Key;
+import java.util.*;
 
 public class SimpleMap<K, V> implements Map<K, V> {
 
@@ -60,12 +59,56 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean remove(K key) {
-        return false;
+        boolean rsl = false;
+        int index = indexFor(hash(key.hashCode()));
+        Objects.checkIndex(index, capacity - 1);
+        if (table[index] != null) {
+            table[index] = null;
+            rsl = true;
+        }
+        return rsl;
     }
 
     @Override
     public Iterator<K> iterator() {
-        return null;
+
+        return new Iterator<K>() {
+
+            private int cursor = 0;
+
+            private int expectedModCount = modCount;
+
+            @Override
+            public boolean hasNext() {
+                boolean rsl = false;
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                for (int i = cursor; i < capacity - 1; i++) {
+                    if (table[i] != null) {
+                    rsl = true;
+                    break;
+                    }
+                }
+                return rsl;
+            }
+
+            @Override
+            public K next() {
+                K rsl = null;
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                for (int i = cursor; i < capacity - 1; i++) {
+                    if (table[i] != null) {
+                        rsl = table[i].key;
+                        cursor = i + 1;
+                        break;
+                    }
+                }
+                return rsl;
+            }
+        };
     }
 
     private static class MapEntry<K, V> {
@@ -80,4 +123,18 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     }
 
+    public static void main(String[] args) {
+        SimpleMap map = new SimpleMap();
+        int key = 1;
+        int value = 2;
+        map.put(key, value);
+        map.put(3, 4);
+        System.out.println(map.get(key));
+        Iterator<Key> it = map.iterator();
+        System.out.println(it.hasNext());
+        System.out.println(it.next());
+        System.out.println(it.next());
+        System.out.println(it.hasNext());
+
+    }
 }
