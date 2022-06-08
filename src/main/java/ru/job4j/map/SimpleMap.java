@@ -43,7 +43,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private void expand() {
         capacity = capacity * 2;
-        MapEntry<K, V>[] newTable = new MapEntry[capacity * 2];
+        MapEntry<K, V>[] newTable = new MapEntry[capacity];
         for (MapEntry<K, V> kvMapEntry : table) {
             if (kvMapEntry != null) {
                 int newIndex = indexFor(hash(kvMapEntry.key.hashCode()));
@@ -57,7 +57,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     public V get(K key) {
         V rsl = null;
         int index = indexFor(hash(key.hashCode()));
-        if (table[index] != null && key.hashCode() == table[index].key.hashCode()) {
+        if (table[index] != null && key.hashCode() == table[index].key.hashCode() && key.equals(table[index].key)) {
             rsl = table[index].value;
         }
         return rsl;
@@ -67,7 +67,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     public boolean remove(K key) {
         boolean rsl = false;
         int index = indexFor(hash(key.hashCode()));
-        if (table[index] != null && key.hashCode() == table[index].key.hashCode()) {
+        if (table[index] != null && key.hashCode() == table[index].key.hashCode() && key.equals(table[index].key)) {
             table[index] = null;
             rsl = true;
         }
@@ -114,5 +114,24 @@ public class SimpleMap<K, V> implements Map<K, V> {
             this.value = value;
         }
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        SimpleMap<?, ?> simpleMap = (SimpleMap<?, ?>) o;
+        return capacity == simpleMap.capacity && count == simpleMap.count && modCount == simpleMap.modCount && Arrays.equals(table, simpleMap.table);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(capacity, count, modCount);
+        result = 31 * result + Arrays.hashCode(table);
+        return result;
     }
 }
