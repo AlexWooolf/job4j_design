@@ -18,7 +18,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean put(K key, V value) {
         boolean rsl;
-        if ((float) count / (float) capacity >= LOAD_FACTOR) {
+        if ((float) count / capacity >= LOAD_FACTOR) {
         expand();
         }
         int index = indexFor(hash(key.hashCode()));
@@ -34,7 +34,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private int hash(int hashCode) {
-        return (hashCode == 0) ? 0 : (hashCode ^ (hashCode >>> 16)) & (capacity - 1);
+        return (hashCode == 0) ? 0 : (hashCode ^ (hashCode >>> 16));
     }
 
     private int indexFor(int hash) {
@@ -42,9 +42,8 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private void expand() {
-        table = Arrays.copyOf(table, capacity * 2);
-        MapEntry<K, V>[] newTable = new MapEntry[capacity * 2];
         capacity = capacity * 2;
+        MapEntry<K, V>[] newTable = new MapEntry[capacity * 2];
         for (MapEntry<K, V> kvMapEntry : table) {
             if (kvMapEntry != null) {
                 int newIndex = indexFor(hash(kvMapEntry.key.hashCode()));
@@ -58,7 +57,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     public V get(K key) {
         V rsl = null;
         int index = indexFor(hash(key.hashCode()));
-        if (table[index] != null && key == table[index].key) {
+        if (table[index] != null && key.hashCode() == table[index].key.hashCode()) {
             rsl = table[index].value;
         }
         return rsl;
@@ -68,7 +67,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     public boolean remove(K key) {
         boolean rsl = false;
         int index = indexFor(hash(key.hashCode()));
-        if (table[index] != null && key == table[index].key) {
+        if (table[index] != null && key.hashCode() == table[index].key.hashCode()) {
             table[index] = null;
             rsl = true;
         }
@@ -86,18 +85,13 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
             @Override
             public boolean hasNext() {
-                boolean rsl = false;
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                for (int i = cursor; i < capacity - 1; i++) {
-                    if (table[i] != null) {
-                    rsl = true;
-                    cursor = i;
-                    break;
-                    }
+                while (cursor < capacity && table[cursor] == null) {
+                    cursor++;
                 }
-                return rsl;
+                return  (cursor < capacity);
             }
 
             @Override
