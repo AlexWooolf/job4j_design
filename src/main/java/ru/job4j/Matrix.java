@@ -16,7 +16,11 @@ public class Matrix {
 
     public static void main(String[] args) {
         try (FileOutputStream out = new FileOutputStream("result.txt")) {
-            out.write(Arrays.deepToString(multiple(10)).getBytes());
+            int[][] matrix = multiple(9);
+            for (int[] row : matrix) {
+                out.write(Arrays.toString(row).getBytes());
+                out.write(System.lineSeparator().getBytes());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
