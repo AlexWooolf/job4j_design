@@ -20,8 +20,10 @@ public class Config {
         try (BufferedReader in = new BufferedReader(new FileReader(path))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 String[] str = line.split("=");
-                if (!str[0].equals("#") && !str[0].isEmpty()) {
-                    values.put(str[1], str[2]);
+                if () {
+                    throw new IllegalArgumentException();
+                } else {
+                    values.put(str[0], str[1]);
                 }
             }
         } catch (IOException e) {
@@ -30,7 +32,7 @@ public class Config {
     }
 
     public String value(String key) {
-        throw new UnsupportedOperationException("Don't impl this method yet!");
+        return values.get(key);
     }
 
     @Override
@@ -45,7 +47,10 @@ public class Config {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Config("app.properties"));
+        String path = "./data/pair_without_comment.properties";
+        Config config = new Config(path);
+        config.load();
+        System.out.println(config.values);
     }
 
 }
