@@ -27,16 +27,12 @@ public class Config {
     }*/
 
     public void load() {
-        List<String> l = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(path))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
-                l.add(line);
-            }
-            for (String s : l) {
-                if (s.length() < 3 || s.contains("#") || !s.contains("=") || s.contains(" ") || s.startsWith("=") || s.endsWith("=")) {
-                    throw new IllegalArgumentException();
-                } else {
-                    var rsl = s.split("=", 2);
+                if ((!line.contains("=") && line.length() > 1) || line.startsWith("=") || line.endsWith("=")) {
+                    throw new IllegalArgumentException("Запись не соответствует шаблону");
+                } else if (line.contains("=")) {
+                    var rsl = line.split("=", 2);
                     values.put(rsl[0], rsl[1]);
                 }
             }
@@ -61,7 +57,7 @@ public class Config {
     }
 
     public static void main(String[] args) {
-        String path = "./data/pair_without_comment.properties";
+        String path = "./data/pair_without_key.properties";
         Config config = new Config(path);
         config.load();
         System.out.println(config.values);

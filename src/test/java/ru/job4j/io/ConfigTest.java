@@ -20,9 +20,6 @@ public class ConfigTest {
         String path = "./data/pair_without_key.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("name"), is("Alex"));
-        assertThat(config.value("surname"), is(Matchers.nullValue()));
-        assertThat(config.value("="), is(Matchers.nullValue()));
     }
 
     @Test
@@ -31,5 +28,14 @@ public class ConfigTest {
         Config config = new Config(path);
         config.load();
         assertThat(config.value("name"), is("Alex=Volkov"));
+        assertThat(config.value("surname"), is("Volkov"));
+    }
+
+    @Test
+    public void whenEmptyLine() {
+        String path = "./data/pair_with_emptyLines.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(config.value("name"), is("Alex"));
     }
 }
