@@ -13,6 +13,8 @@ public class ConfigTest {
         Config config = new Config(path);
         config.load();
         assertThat(config.value("name"), is("Alex"));
+        assertThat(config.value("surname"), is("Volkov="));
+        assertThat(config.value("class"), is(Matchers.nullValue()));
     }
 
     @Test(expected = IllegalArgumentException.class)

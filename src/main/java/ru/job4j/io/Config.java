@@ -29,9 +29,9 @@ public class Config {
     public void load() {
         try (BufferedReader in = new BufferedReader(new FileReader(path))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
-                if ((!line.contains("=") && line.length() > 1) || line.startsWith("=") || line.endsWith("=")) {
+                if ((!line.contains("=") && line.length() > 1) || line.startsWith("=") || (line.indexOf("=") == line.length() && line.endsWith("="))) {
                     throw new IllegalArgumentException("Запись не соответствует шаблону");
-                } else if (line.contains("=")) {
+                } else if (line.contains("=") && !line.startsWith("#")) {
                     var rsl = line.split("=", 2);
                     values.put(rsl[0], rsl[1]);
                 }
