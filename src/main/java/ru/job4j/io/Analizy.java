@@ -2,29 +2,26 @@ package ru.job4j.io;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Analizy {
     public void unavailable(String source, String target) {
         boolean status = true;
-        int count = 0;
         List<String> period = new ArrayList<>();
         List<String[]> l = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(source))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
-                l.add(line.split(" "));
-            }
-            for (int i = 0; i < l.size(); i++) {
-                if ((l.get(i)[0].equals("400") || l.get(i)[0].equals("500")) && status) {
+                if (status && (line.contains("400") || line.contains("500"))) {
                     status = false;
-                    period.add(count, l.get(i)[1] + ";");
-                } else if (!status) {
+                    period.add(line.split(" ")[1]);
+                } else if (!status && (line.contains("200") || line.contains("300"))) {
                     status = true;
-                    period.add(count + 1, l.get(i)[1] + ";");
-                    count++;
+                    period.add(line.split(" ")[1] + ";");
                 }
             }
-            } catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         try (PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
