@@ -11,7 +11,6 @@ public class Analizy {
         boolean status = true;
         int count = 0;
         List<String> period = new ArrayList<>();
-        List<String[]> l = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(source))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 if (status && (line.contains("400") || line.contains("500"))) {
