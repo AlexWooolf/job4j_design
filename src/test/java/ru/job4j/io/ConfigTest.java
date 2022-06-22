@@ -15,6 +15,7 @@ public class ConfigTest {
         assertThat(config.value("name"), is("Alex"));
         assertThat(config.value("surname"), is("Volkov="));
         assertThat(config.value("class"), is(Matchers.nullValue()));
+        assertThat(config.value("taste"), is("nice try"));
     }
 
     @Test(expected = IllegalArgumentException.class)
