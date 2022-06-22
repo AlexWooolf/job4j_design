@@ -9,23 +9,28 @@ import java.util.List;
 public class Analizy {
     public void unavailable(String source, String target) {
         boolean status = true;
+        int count = 0;
         List<String> period = new ArrayList<>();
         List<String[]> l = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(source))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 if (status && (line.contains("400") || line.contains("500"))) {
                     status = false;
-                    period.add(line.split(" ")[1]);
+                    period.add(count, line.split(" ")[1] + ";");
                 } else if (!status && (line.contains("200") || line.contains("300"))) {
                     status = true;
-                    period.add(line.split(" ")[1] + ";");
+                    String tmp = period.get(count);
+                    period.set(count, tmp + line.split(" ")[1] + ";");
+                    count++;
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         try (PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
-            out.println(period);
+            for (String p : period) {
+                out.println(p);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
