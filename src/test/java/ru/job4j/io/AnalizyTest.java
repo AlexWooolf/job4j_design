@@ -9,22 +9,21 @@ import java.io.*;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class AnalizyTest  {
+public class AnalizyTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public  void checkServer() throws IOException {
+    public void checkServer() throws IOException {
         File source = folder.newFile("source.txt");
         File target = folder.newFile("target.txt");
         try (PrintWriter out = new PrintWriter(source)) {
-            out.println("""
-                    200 10:56:01
-                    500 10:57:01
-                    400 10:58:01
-                    200 10:59:01
-                    500 11:01:02
-                    200 11:02:02""");
+            out.println("200 10:56:01\n" +
+                    "500 10:57:01\n" +
+                    "400 10:58:01\n" +
+                    "200 10:59:01\n" +
+                    "500 11:01:02\n" +
+                    "200 11:02:02");
         }
         Analizy test = new Analizy();
         test.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
