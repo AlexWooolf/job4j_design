@@ -2,8 +2,6 @@ package ru.job4j.io;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Analizy {
@@ -23,6 +21,9 @@ public class Analizy {
                     period.set(count, tmp + line.split(" ")[1] + ";");
                     count++;
                 }
+            }
+            for (String p : period) {
+                out.println(p);
             }
         } catch (IOException e) {
             e.printStackTrace();
