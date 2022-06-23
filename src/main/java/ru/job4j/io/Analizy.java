@@ -11,7 +11,8 @@ public class Analizy {
         boolean status = true;
         int count = 0;
         List<String> period = new ArrayList<>();
-        try (BufferedReader in = new BufferedReader(new FileReader(source))) {
+        try (BufferedReader in = new BufferedReader(new FileReader(source));
+             PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 if (status && (line.contains("400") || line.contains("500"))) {
                     status = false;
@@ -22,13 +23,6 @@ public class Analizy {
                     period.set(count, tmp + line.split(" ")[1] + ";");
                     count++;
                 }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
-            for (String p : period) {
-                out.println(p);
             }
         } catch (IOException e) {
             e.printStackTrace();
