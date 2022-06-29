@@ -1,5 +1,7 @@
 package ru.job4j.io;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.io.File;
 
 public class Dir {
@@ -13,7 +15,7 @@ public class Dir {
         }
         System.out.println(String.format("size : %s", file.getTotalSpace()));
         for (File subfile : file.listFiles()) {
-            System.out.println(subfile.getName() + String.format(". size : %s", subfile.length()));
+            System.out.printf("name : %s. size : %s%n", subfile.getName(),  subfile.length());
         }
     }
 }
