@@ -9,8 +9,22 @@ import java.util.function.Predicate;
 
 public class Search {
     public static void main(String[] args) throws IOException {
-        Path start = Paths.get("c:\\projects\\job4j_design");
-        search(start, p -> p.toFile().getName().endsWith(".md")).forEach(System.out::println);
+        String str1 = "c:\\projects\\job4j_design";
+        String str2 = ".md";
+        if (check(str1, str2)) {
+            Path start = Paths.get(str1);
+            search(start, p -> p.toFile().getName().endsWith(str2)).forEach(System.out::println);
+        }
+    }
+
+    public static boolean check(String str1, String str2) {
+        if (str1.isEmpty() || str2.isEmpty()) {
+            throw new IllegalArgumentException("Argument is null");
+        }
+        if (!str2.startsWith(".")) {
+            throw new IllegalArgumentException("Not an expansion");
+        }
+        return true;
     }
 
     public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
