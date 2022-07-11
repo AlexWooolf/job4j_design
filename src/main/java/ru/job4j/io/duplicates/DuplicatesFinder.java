@@ -22,7 +22,9 @@ public class DuplicatesFinder {
         var keys = rsl.keySet();
         for (FileProperty f : keys) {
             System.out.println(f.toString());
-            System.out.println(rsl.get(f).toString());
+            for (Path p: rsl.get(f)) {
+                System.out.println(p);
+            }
         }
     }
 }

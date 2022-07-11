@@ -22,12 +22,12 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
         FileProperty fileProperty = new FileProperty(file);
         ArrayList<Path> list = new ArrayList<>();
         if (data.containsKey(fileProperty)) {
-            List<Path> tmp = new ArrayList<>(data.get(fileProperty));
+            list.add(data.get(fileProperty).get(0));
             if (duplicate.containsKey(fileProperty)) {
-                tmp = duplicate.get(fileProperty);
+                list.addAll(duplicate.get(fileProperty));
             }
-            tmp.add(file);
-            duplicate.put(fileProperty, tmp);
+            list.add(file);
+            duplicate.put(fileProperty, list);
         } else {
             list.add(file);
             data.put(fileProperty, list);
