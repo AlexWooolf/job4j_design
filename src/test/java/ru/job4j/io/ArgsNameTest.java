@@ -25,11 +25,11 @@ public class ArgsNameTest {
         assertThat(jvm.get("request"), is("?msg=Exit="));
     }
 
-    /*@Test(expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void whenGetNotExist() {
         ArgsName jvm = ArgsName.of(new String[] {"-Xmx=512"});
         jvm.get("Xms");
-    }*/
+    }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenWrongSomeArgument() {
