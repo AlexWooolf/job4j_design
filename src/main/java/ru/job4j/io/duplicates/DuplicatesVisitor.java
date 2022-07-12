@@ -20,11 +20,11 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         FileProperty fileProperty = new FileProperty(file);
         ArrayList<Path> list = new ArrayList<>();
-        if (duplicate.containsKey(fileProperty)) {
-            list.addAll(duplicate.get(fileProperty));
-        }
         list.add(file);
-        duplicate.put(fileProperty, list);
+        if (duplicate.putIfAbsent(fileProperty, list) != null) {
+            list.addAll(duplicate.get(fileProperty));
+            duplicate.put(fileProperty, list);
+        }
         return FileVisitResult.CONTINUE;
     }
 }
