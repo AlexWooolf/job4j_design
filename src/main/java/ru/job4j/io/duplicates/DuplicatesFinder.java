@@ -21,9 +21,11 @@ public class DuplicatesFinder {
     public static void printRsl(Map<FileProperty, List<Path>> rsl) {
         var keys = rsl.keySet();
         for (FileProperty f : keys) {
-            System.out.println(f.toString());
-            for (Path p: rsl.get(f)) {
-                System.out.println(p);
+            if (rsl.get(f).size() > 1) {
+                System.out.println(f.toString());
+                for (Path p : rsl.get(f)) {
+                    System.out.println(p);
+                }
             }
         }
     }
