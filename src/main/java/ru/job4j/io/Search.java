@@ -9,29 +9,24 @@ import java.util.function.Predicate;
 
 public class Search {
     public static void main(String[] args) throws IOException {
-        Path path = Paths.get("c:\\projects\\job4j_design");
-        if (args.length != 0) {
-            throw new IllegalArgumentException("IllegalArgumentException");
-        }
-        String str2 = ".md";
-        if (check(path, str2)) {
-            Path start = path;
-            search(start, p -> p.toFile().getName().endsWith(str2)).forEach(System.out::println);
+        if (check(args)) {
+            Path start = Paths.get(args[0]);
+            search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
         }
     }
 
-    public static boolean check(Path path, String str2) {
-        if (!path.toFile().isDirectory()) {
-            throw new IllegalArgumentException("Argument is not directory");
+    public static boolean check(String[] args) {
+        if (args.length < 2) {
+            throw new IllegalArgumentException("Enter path and extension");
         }
-        if (!path.toFile().exists()) {
-            throw new IllegalArgumentException("Argument is not exists");
+        if (!Paths.get(args[0]).toFile().isDirectory()) {
+            throw new IllegalArgumentException("Path is not a directory");
         }
-        if (str2.isEmpty()) {
-            throw new IllegalArgumentException("Argument is null");
+        if (!Paths.get(args[0]).toFile().exists()) {
+            throw new IllegalArgumentException("Path is not exists");
         }
-        if (!str2.startsWith(".")) {
-            throw new IllegalArgumentException("Not an expansion");
+        if (!(args[1]).startsWith(".")) {
+            throw new IllegalArgumentException("Wrong extension");
         }
         return true;
     }
