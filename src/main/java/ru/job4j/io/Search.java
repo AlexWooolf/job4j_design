@@ -9,16 +9,25 @@ import java.util.function.Predicate;
 
 public class Search {
     public static void main(String[] args) throws IOException {
-        String str1 = "c:\\projects\\job4j_design";
+        Path path = Paths.get("c:\\projects\\job4j_design");
+        if (args.length != 0) {
+            throw new IllegalArgumentException("IllegalArgumentException");
+        }
         String str2 = ".md";
-        if (check(str1, str2)) {
-            Path start = Paths.get(str1);
+        if (check(path, str2)) {
+            Path start = path;
             search(start, p -> p.toFile().getName().endsWith(str2)).forEach(System.out::println);
         }
     }
 
-    public static boolean check(String str1, String str2) {
-        if (str1.isEmpty() || str2.isEmpty()) {
+    public static boolean check(Path path, String str2) {
+        if (!path.toFile().isDirectory()) {
+            throw new IllegalArgumentException("Argument is not directory");
+        }
+        if (!path.toFile().exists()) {
+            throw new IllegalArgumentException("Argument is not exists");
+        }
+        if (str2.isEmpty()) {
             throw new IllegalArgumentException("Argument is null");
         }
         if (!str2.startsWith(".")) {
