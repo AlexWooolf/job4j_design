@@ -43,7 +43,7 @@ public class Zip {
         Zip zip = new Zip();
         var params = zip.check(args);
         var list = Search.search(Paths.get(params.get("d")), p -> p.toFile().getName().endsWith(params.get("e")));
-        zip.packFiles(list, new File("./pom.zip"));
+        zip.packFiles(list, new File(params.get("o")));
     }
 }
 
