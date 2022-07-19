@@ -42,7 +42,7 @@ public class Zip {
     public static void main(String[] args) throws IOException {
         Zip zip = new Zip();
         var params = zip.check(args);
-        var list = Search.search(Paths.get(params.get("d")), p -> p.toFile().getName().endsWith(params.get("e")));
+        var list = Search.search(Paths.get(params.get("d")), p -> !p.toFile().getName().endsWith(params.get("e")));
         zip.packFiles(list, new File(params.get("o")));
     }
 }
