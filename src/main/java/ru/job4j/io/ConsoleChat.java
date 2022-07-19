@@ -26,12 +26,12 @@ public class ConsoleChat {
         Random random = new Random();
         List<String> log = new ArrayList<>();
 
-        while (!userText.equals(OUT)) {
-            while (!userText.equals(STOP)) {
-                if (userText.equals(OUT)) {
+        while (!OUT.equals(userText)) {
+            while (!STOP.equals(userText)) {
+                if (OUT.equals(userText)) {
                     saveLog(log);
                     break;
-                } else if (userText.equals(CONTINUE)) {
+                } else if (CONTINUE.equals(userText)) {
                     System.out.println(userText);
                     log.add(userText);
                     String answer = botAnswer.get(random.nextInt(botAnswer.size()));
