@@ -51,6 +51,7 @@ public class CSVReader {
                 rsl.forEach(System.out::println);
             } else {
                 try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(argsName.get("out"))))) {
+                    out.println(argsName.get("filter").replace(",", argsName.get("delimiter")));
                     rsl.forEach(out::println);
                 } catch (IOException e) {
                     e.printStackTrace();
