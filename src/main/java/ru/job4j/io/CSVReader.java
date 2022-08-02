@@ -35,13 +35,13 @@ public class CSVReader {
         List<Integer> index = new ArrayList<>();
         String[] filterStrings = argsName.get("filter").split(",");
         String[] words = line.split(argsName.get("delimiter"));
-        for (int i = 0; i < filterStrings.length; i++) {
-            for (String word : words) {
-                if (filterStrings[i].equals(word)) {
+        for (String filter : filterStrings) {
+            for (int i = 0; i < words.length; i++) {
+                if (filter.equals(words[i])) {
                     index.add(i);
-                    }
                 }
             }
+        }
         return index;
         }
 
@@ -75,6 +75,7 @@ public class CSVReader {
         }
 
     public static void main(String[] args) throws Exception {
+        CSVReader reader = new CSVReader();
         ArgsName argsName = ArgsName.of(args);
         handle(argsName);
     }
