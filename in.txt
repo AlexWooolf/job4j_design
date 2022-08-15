@@ -1,0 +1,3 @@
+3
+AA AB AC
+AA AA AA
