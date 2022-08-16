@@ -4,38 +4,45 @@ import java.util.*;
 
 public class Second {
 
-    class Team {
-        private List<String> names;
+    static class Team {
+        private final List<String> names;
 
-        public Team(List<String> names) {
-            this.names = names;
+        Team(String names) {
+            String[] array = names.split(" ");
+            Arrays.sort(array);
+            this.names = Arrays.asList(array);
         }
 
-        private boolean check(Team t) {
-            return this.names.contains(t.names.get(0)) && this.names.contains(t.names.get(1)) && this.names.contains(t.names.get(2));
+        @Override
+        public boolean equals(Object o) {
+            return o == this || o instanceof Team && ((Team) o).names.equals(this.names);
+        }
+
+        @Override
+        public int hashCode() {
+            return names.hashCode();
         }
     }
 
     private void run() {
         Scanner scanner = new Scanner(System.in);
+
         int n = Integer.parseInt(scanner.nextLine()); // число строк
-        ArrayList<Integer> wins = new ArrayList<>(n); // число побед
-        ArrayList<Team> teams = new ArrayList<>(n); // команды
+        Map<Team, Integer> wins = new HashMap<>(); // число побед
+
         for (int i = 0; i < n; i++) { // ввод данных
-            String[] names = scanner.nextLine().split(" ");
-            teams.add(i, new Team(Arrays.asList(names)));
-            wins.add(i, 1);
+            String names = scanner.nextLine();
+            Team team = new Team(names);
+            Integer previousCount = wins.getOrDefault(team, 0);
+            wins.put(team, previousCount + 1);
         }
-        for (int i = 0; i < teams.size(); i++) {
-            for (int j = i + 1; j < teams.size(); j++) {
-                if (teams.get(i).check(teams.get(j))) { //при проверке на имена внутри команды счётчик побед + 1,
-                    wins.set(i, wins.get(i) + 1);
-                }
+        int maxWins = 0;
+        for (Integer value : wins.values()) {
+            if (value > maxWins) {
+                maxWins = value;
             }
         }
-        for (int i : wins) {
-            System.out.println(i);
-        }
+        System.out.println(maxWins);
     }
 
     public static void main(String[] args) {
