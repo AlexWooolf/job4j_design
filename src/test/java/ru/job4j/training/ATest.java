@@ -1,4 +1,4 @@
-package ru.job4j.tinkoff;
+package ru.job4j.training;
 
 import junit.framework.TestCase;
 
