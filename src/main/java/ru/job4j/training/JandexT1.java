@@ -16,11 +16,11 @@ public class JandexT1 {
         byte rsl = interactor;
         if (interactor == 0 && code != 0) {
             rsl = 3;
-        } else if (interactor == 1) {
+        } else if (interactor == 0 || interactor == 1) {
             rsl = checker;
         } else if (interactor == 4 && code != 0) {
             rsl = 3;
-        } else if (interactor == 4 && code == 0) {
+        } else if (interactor == 4) {
             rsl = 4;
         } else if (interactor == 6) {
             rsl = 0;

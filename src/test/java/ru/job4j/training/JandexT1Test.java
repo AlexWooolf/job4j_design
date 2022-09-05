@@ -22,7 +22,10 @@ class JandexT1Test {
         return Stream.of(
                 Arguments.of((byte)0,(byte)0,(byte)0,(byte)0),
                 Arguments.of((byte)-1, (byte)0, (byte)1, (byte)3),
-                Arguments.of((byte)42, (byte)1, (byte)6, (byte)6)
+                Arguments.of((byte)42, (byte)1, (byte)6, (byte)6),
+                Arguments.of((byte)44, (byte)7, (byte)4, (byte)1),
+                Arguments.of((byte)1, (byte)4, (byte)0, (byte)3),
+                Arguments.of((byte)-3, (byte)2, (byte)4, (byte)2)
         );
     }
 }
