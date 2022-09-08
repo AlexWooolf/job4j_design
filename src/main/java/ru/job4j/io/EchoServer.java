@@ -17,7 +17,7 @@ public class EchoServer {
                     if (string.contains("Bye") || string.contains("Exit")) {
                         server.close();
                     } else if (string.contains("Hello")) {
-                        out.write("Hello! \r\n\r\n".getBytes());
+                        out.write("Hello!\r\n\r\n".getBytes());
                     } else {
                         String msg = string.substring(string.lastIndexOf("msg=") + 4);
                         out.write((msg + "\r\n\r\n").getBytes());
