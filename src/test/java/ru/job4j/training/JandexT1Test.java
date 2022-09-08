@@ -1,3 +1,4 @@
+/*
 package ru.job4j.training;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,3 +30,4 @@ class JandexT1Test {
         );
     }
 }
+*/
