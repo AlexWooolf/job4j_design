@@ -27,10 +27,10 @@ public class Second {
     private void run() {
         Scanner scanner = new Scanner(System.in);
 
-        int n = Integer.parseInt(scanner.nextLine()); // число строк
-        Map<Team, Integer> wins = new HashMap<>(); // число побед
+        int n = Integer.parseInt(scanner.nextLine());
+        Map<Team, Integer> wins = new HashMap<>();
 
-        for (int i = 0; i < n; i++) { // ввод данных
+        for (int i = 0; i < n; i++) {
             String names = scanner.nextLine();
             Team team = new Team(names);
             Integer previousCount = wins.getOrDefault(team, 0);

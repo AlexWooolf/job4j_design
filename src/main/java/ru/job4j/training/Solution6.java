@@ -35,7 +35,6 @@ public class Solution6 {
             if (segmentsConnectedWithLeft == null) {
                 return chainLength;
             } else {
-                //TODO обработать ситуацию, когда начало и конец в одной точке
                 int currentLength = getChain(segments, segmentsConnectedWithLeft, ++chainLength);
                 if (currentLength > maxChainLength) {
                     maxChainLength = currentLength;
