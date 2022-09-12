@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<car cool="true" seats="4">
+    <engine power="100500"/>
+    <tunings>
+        <tuning>bigWheels</tuning>
+        <tuning>loudExhaust</tuning>
+    </tunings>
+</car>
