@@ -13,6 +13,9 @@ public class Engine {
         this.power = power;
     }
 
+    public Engine() {
+    }
+
     @Override
     public String toString() {
         return "Engine{" + "power=" + power + '}';

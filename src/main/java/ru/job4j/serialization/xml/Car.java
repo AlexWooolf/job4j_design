@@ -16,11 +16,16 @@ public class Car {
     private int seats;
     private String model;
     private Engine engine;
+    @XmlElementWrapper
+    @XmlElement(name = "tuning")
     private String[] tuning;
 
     @Override
     public String toString() {
         return "Car{" + "cool=" + cool + ", seats=" + seats + ", model='" + model + '\'' + ", engine=" + engine + ", tuning=" + Arrays.toString(tuning) + '}';
+    }
+
+    public Car() {
     }
 
     public Car(boolean cool, int seats, String model, Engine engine, String[] tuning) {
