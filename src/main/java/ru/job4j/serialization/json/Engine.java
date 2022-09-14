@@ -8,6 +8,10 @@ public class Engine {
         this.power = power;
     }
 
+    public int getPower() {
+        return power;
+    }
+
     @Override
     public String toString() {
         return "Engine{" + "power=" + power + '}';
