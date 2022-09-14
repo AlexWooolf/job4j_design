@@ -5,6 +5,27 @@ import java.util.Arrays;
 public class Car {
 
     private boolean cool;
+
+    public boolean isCool() {
+        return cool;
+    }
+
+    public int getSeats() {
+        return seats;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public Engine getEngine() {
+        return engine;
+    }
+
+    public String[] getTuning() {
+        return tuning;
+    }
+
     private int seats;
     private String model;
     private Engine engine;
