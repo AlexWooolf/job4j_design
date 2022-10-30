@@ -5,7 +5,7 @@ create table movies(
 
 create table actors(
 	id serial primary key,
-	name varchar(255),
+	name varchar(255)
 );
 
 create table actors_movies(
