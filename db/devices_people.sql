@@ -30,7 +30,7 @@ insert into people(name) values
 insert into devices_people(device_id, people_id) values
 (1, 1),
 (2, 2),
-(3, 3)
+(3, 3),
 (4,1);
 
 select avg(price) from devices as d;
