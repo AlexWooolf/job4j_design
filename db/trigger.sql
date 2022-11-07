@@ -29,8 +29,7 @@ create or replace function nologi_now()
     returns trigger as
 $$
     BEGIN
-        update products
-        new.price = new.price + new.price * 0.2
+        new.price = new.price + new.price * 0.2ж
         return NEW;
     END;
 $$
