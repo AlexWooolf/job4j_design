@@ -1,3 +1,15 @@
+create table storage(
+id serial primary key,
+name text
+);
+
+insert into storage(name)
+values ('one'),
+       ('two'),
+       ('three'),
+	   ('four');
+	   select * from storage;
+
 begin;
 	   delete from storage;
 	   select * from storage;
