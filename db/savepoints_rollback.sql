@@ -14,6 +14,7 @@ begin;
 	   delete from storage;
 	   select * from storage;
 	   rollback;
+begin;
 	   select * from storage;
 	    insert into storage(name) values ('seven');
 		select * from storage;
