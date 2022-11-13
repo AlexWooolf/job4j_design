@@ -29,7 +29,7 @@ public class Config {
     public void load() {
         try (BufferedReader in = new BufferedReader(new FileReader(path))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
-                if ((!line.contains("=") && line.length() != 0) || line.startsWith("=") || (line.indexOf("=") == line.length() - 1 && line.length() != 0)) {
+                if ((!line.contains("=") && line.length() != 0 && !line.startsWith("#")) || line.startsWith("=") || (line.indexOf("=") == line.length() - 1 && line.length() != 0)) {
                     throw new IllegalArgumentException("Запись не соответствует шаблону");
                 } else if (line.contains("=") && line.length() > 3 && !line.startsWith("#")) {
                     var rsl = line.split("=", 2);
