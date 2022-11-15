@@ -22,7 +22,7 @@ public class TableEditor implements AutoCloseable {
         String url = properties.getProperty("url");
         String login = properties.getProperty("login");
         String password = properties.getProperty("password");
-        Connection connection = DriverManager.getConnection(url, login, password);
+        this.connection = DriverManager.getConnection(url, login, password);
     }
 
     private void execute(String sql) throws SQLException {
@@ -32,7 +32,7 @@ public class TableEditor implements AutoCloseable {
     }
 
     public void createTable(String tableName) throws SQLException {
-        String sql = String.format("create table if not exists %s;", tableName);
+        String sql = String.format("create table if not exists %s();", tableName);
         execute(sql);
     }
 
@@ -85,7 +85,7 @@ public class TableEditor implements AutoCloseable {
 
     public static void main(String[] args) throws IOException {
         Properties config = new Properties();
-        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("TableEditor.properties")) {
+        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("tableEditor.properties")) {
             config.load(in);
         }
         try (TableEditor tableEditor = new TableEditor(config)) {
