@@ -1,5 +1,7 @@
 package ru.job4j.jdbc;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 import java.util.StringJoiner;
@@ -20,24 +22,38 @@ public class TableEditor implements AutoCloseable {
         String url = properties.getProperty("url");
         String login = properties.getProperty("login");
         String password = properties.getProperty("password");
-        DriverManager.getConnection(url, login, password);
+        Connection connection = DriverManager.getConnection(url, login, password);
     }
 
-    public void createTable(String tableName) {
-
-
+    private void execute(String sql) throws SQLException {
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(sql);
+        }
     }
 
-    public void dropTable(String tableName) {
+    public void createTable(String tableName) throws SQLException {
+        String sql = String.format("create table if not exists %s;", tableName);
+        execute(sql);
     }
 
-    public void addColumn(String tableName, String columnName, String type) {
+    public void dropTable(String tableName) throws SQLException {
+        String sql = String.format("drop table %s;", tableName);
+        execute(sql);
     }
 
-    public void dropColumn(String tableName, String columnName) {
+    public void addColumn(String tableName, String columnName, String type) throws SQLException {
+        String sql = String.format("alter table %s add column %s %s ", tableName, columnName, type);
+        execute(sql);
     }
 
-    public void renameColumn(String tableName, String columnName, String newColumnName) {
+    public void dropColumn(String tableName, String columnName) throws SQLException {
+        String sql = String.format("alter table %s drop column %s ", tableName, columnName);
+        execute(sql);
+    }
+
+    public void renameColumn(String tableName, String columnName, String newColumnName) throws SQLException {
+        String sql = String.format("alter table %s rename column %s to %s ", tableName, columnName, newColumnName);
+        execute(sql);
     }
 
 
@@ -64,6 +80,29 @@ public class TableEditor implements AutoCloseable {
     public void close() throws Exception {
         if (connection != null) {
             connection.close();
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        Properties config = new Properties();
+        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("\"src/main/resources/TableEditor.properties")) {
+            config.load(in);
+        }
+        try (TableEditor tableEditor = new TableEditor(config)) {
+            tableEditor.initConnection();
+            tableEditor.createTable("storage");
+            tableEditor.addColumn("storage", "weight", "int");
+            tableEditor.renameColumn("storage", "weight", "volume");
+            tableEditor.dropColumn("storage", "volume");
+            tableEditor.dropTable("storage");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
