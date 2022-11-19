@@ -22,9 +22,21 @@ public class ImportDB {
     public List<User> load() throws IOException {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
-            /* rd.lines().forEach(...); */
+            rd.lines()
+                    .map(l -> l.split(";"))
+                    .filter(this::check)
+                    .forEach(strings -> users.add(new User(strings[0], strings[1])));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return users;
+    }
+
+    private boolean check(String[] strings) {
+        if (strings.length < 2 || strings[0].isEmpty() || strings[1].isEmpty()) {
+            throw new IllegalArgumentException("Wrong data");
+        }
+        return true;
     }
 
     public void save(List<User> users) throws ClassNotFoundException, SQLException {
