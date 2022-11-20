@@ -39,7 +39,7 @@ public class LogFilter {
 
     public static void main(String[] args) {
         LogFilter logFilter = new LogFilter();
-        List<String> log = logFilter.filter("log.txt");
-        save(log, "404.txt");
+        List<String> log = logFilter.filter("C:\\projects\\job4j_design\\data\\log.txt");
+        save(log, "C:\\projects\\job4j_design\\data\\404.txt");
     }
 }
